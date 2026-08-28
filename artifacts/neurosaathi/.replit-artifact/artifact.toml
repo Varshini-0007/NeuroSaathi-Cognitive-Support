@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "NeuroSaathi"
+description = "A calm, accessible cognitive-support and memory-assistance prototype for people living with dementia and their caregivers, with simulated games, adaptive guidance, family memories, routines, and caregiver insights."
+version = "1.0.0"
+id = "artifacts/neurosaathi"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23030
+
+[services.development]
+run = "pnpm --filter @workspace/neurosaathi run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/neurosaathi", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/neurosaathi/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23030"
+BASE_PATH = "/"
